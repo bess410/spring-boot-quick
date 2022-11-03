@@ -1,6 +1,6 @@
 package com.hotmail.bess410.springbootquick.controller;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.hotmail.bess410.springbootquick.model.Greeting;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
-    @Value("${greeting-name: Mirage}")
-    private String name;
 
-    @Value("${greeting-coffee: ${greeting-name} is drinking Cafe Ganador}")
-    private String coffee;
+    private final Greeting greeting;
+
+    public GreetingController(Greeting greeting) {
+        this.greeting = greeting;
+    }
 
     @GetMapping
     public String getGreeting() {
-        return this.name;
+        return greeting.getName();
     }
 
     @GetMapping("/coffee")
     public String getNameAndCoffee() {
-        return this.coffee;
+        return greeting.getCoffee();
     }
 }
